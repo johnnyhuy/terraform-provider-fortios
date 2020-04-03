@@ -112,6 +112,31 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
+			"auto_negotiate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
+			"encapsulation": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
+			"dh_group": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "psk",
+			},
+			"dead_peer_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
+			"ike_version": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "2",
+			},
 		},
 	}
 }
@@ -139,7 +164,12 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	ipv4SplitExclude := d.Get("ipv4_split_exclude").(string)
 	modeCfg := d.Get("mode_cfg").(string)
 	authmethod := d.Get("authmethod").(string)
-	authmethodRemote := d.Get("authmethod_remote").(string)
+	autonegotiate := d.Get("auto_negotiate").(string)
+	encapsulation := d.Get("encapsulation").(string)
+	deadPeerDetection := d.Get("dead_peer_detection").(string)
+	ikeVersion := d.Get("ike_version").(string)
+	authmethodRemote := d.Get("authmethodRemote").(string)
+	
 
 	var certificates []forticlient.MultValue
 
@@ -174,6 +204,9 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 		ModeCfg:             modeCfg,
 		Authmethod:          authmethod,
 		AuthmethodRemote:    authmethodRemote,
+		Encapsulation:       encapsulation,
+		IkeVersion:          ikeVersion,
+
 	}
 
 	//Call process by sdk
@@ -214,6 +247,10 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	modeCfg := d.Get("mode_cfg").(string)
 	authmethod := d.Get("authmethod").(string)
 	authmethodRemote := d.Get("authmethod_remote").(string)
+	autoNegotiate := d.Get("auto_negotiate").(string)
+	encapsulation := d.Get("encapsulation").(string)
+	deadPeerDetection := d.Get("dead_peer_detection").(string)
+	ikeVersion := d.Get("ike_version").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -248,6 +285,10 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 		ModeCfg:             modeCfg,
 		Authmethod:          authmethod,
 		AuthmethodRemote:    authmethodRemote,
+		AutoNegotiate:       autoNegotiate,
+		Encapsulation:       encapsulation,
+		IkeVersion:          ikeVersion,
+		DeadPeerDetection:   deadPeerDetection,
 	}
 
 	//Call process by sdk
@@ -318,6 +359,10 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("mode_cfg", o.ModeCfg)
 	d.Set("authmethod", o.Authmethod)
 	d.Set("authmethod_remote", o.AuthmethodRemote)
+	d.Set("auto_negotiate", o.AutoNegotiate)
+	d.Set("encapsulation", o.Encapsulation)
+	d.Set("ike_version", o.IkeVersion)
+	d.Set("dead_peer_detection", o.DeadPeerDetection)
 
 	return nil
 }

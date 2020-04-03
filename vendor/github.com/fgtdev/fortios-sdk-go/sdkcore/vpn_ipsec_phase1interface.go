@@ -31,6 +31,10 @@ type JSONVPNIPsecPhase1Interface struct {
 	ModeCfg             string     `json:"mode-cfg"`
 	Authmethod          string     `json:"authmethod"`
 	AuthmethodRemote    string     `json:"authmethod-remote"`
+	AutoNegotiate       string     `json:"auto-negotiate"`
+	Encapsulation       string     `json:"encapsulation"`
+	DeadPeerDetection   string     `json:"dpd"`
+	IkeVersion          string     `json:"ike-version"`
 }
 
 // JSONCreateVPNIPsecPhase1InterfaceOutput contains the output results for Create API function
@@ -390,6 +394,18 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 		}
 		if mapTmp["authmethod-remote"] != nil {
 			output.AuthmethodRemote = mapTmp["authmethod-remote"].(string)
+		}
+		if mapTmp["auto-negotiate"] != nil {
+			output.AutoNegotiate = mapTmp["auto-negotiate"].(string)
+		}
+		if mapTmp["encapsulation"] != nil {
+			output.Encapsulation = mapTmp["encapsulation"].(string)
+		}
+		if mapTmp["dpd"] != nil {
+			output.DeadPeerDetection = mapTmp["dpd"].(string)
+		}
+		if mapTmp["ike-version"] != nil {
+			output.IkeVersion = mapTmp["ike-version"].(string)
 		}
 
 	} else {
