@@ -399,10 +399,10 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 			output.AutoNegotiate = mapTmp["auto-negotiate"].(string)
 		}
 		if mapTmp["encapsulation"] != nil {
-			output.AuthmethodRemote = mapTmp["encapsulation"].(string)
+			output.Encapsulation = mapTmp["encapsulation"].(string)
 		}
 		if mapTmp["dpd"] != nil {
-			output.Encapsulation = mapTmp["dpd"].(string)
+			output.DeadPeerDetection = mapTmp["dpd"].(string)
 		}
 		if mapTmp["ike-version"] != nil {
 			output.IkeVersion = mapTmp["ike-version"].(string)

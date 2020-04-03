@@ -166,7 +166,7 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	authmethod := d.Get("authmethod").(string)
 	autonegotiate := d.Get("auto_negotiate").(string)
 	encapsulation := d.Get("encapsulation").(string)
-	deadDeerDetection := d.Get("dead_peer_detection").(string)
+	deadPeerDetection := d.Get("dead_peer_detection").(string)
 	ikeVersion := d.Get("ike_version").(string)
 	authmethodRemote := d.Get("authmethodRemote").(string)
 	
@@ -249,7 +249,7 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	authmethodRemote := d.Get("authmethod_remote").(string)
 	autoNegotiate := d.Get("auto_negotiate").(string)
 	encapsulation := d.Get("encapsulation").(string)
-	deadDeerDetection := d.Get("dead_peer_detection").(string)
+	deadPeerDetection := d.Get("dead_peer_detection").(string)
 	ikeVersion := d.Get("ike_version").(string)
 
 	var certificates []forticlient.MultValue
@@ -288,6 +288,7 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 		AutoNegotiate:       autoNegotiate,
 		Encapsulation:       encapsulation,
 		IkeVersion:          ikeVersion,
+		DeadPeerDetection:   deadPeerDetection,
 	}
 
 	//Call process by sdk
@@ -361,6 +362,7 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("auto_negotiate", o.AutoNegotiate)
 	d.Set("encapsulation", o.Encapsulation)
 	d.Set("ike_version", o.IkeVersion)
+	d.Set("dead_peer_detection", o.DeadPeerDetection)
 
 	return nil
 }
